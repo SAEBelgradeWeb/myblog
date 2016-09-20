@@ -6,7 +6,8 @@ $user_id = $_POST['users'];
 $category_id = $_POST['category'];
 
 mysqli_query($conn, "INSERT INTO posts SET title='$title', content='$content', user_id='$user_id', category_id = '$category_id'");
-
+    //$modules = $_GET['module']
+    header("Location: /index.php?module=$module&action=read");
 }
 ?>
 
