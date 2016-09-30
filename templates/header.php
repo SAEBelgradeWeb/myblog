@@ -12,4 +12,12 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>My Blog</h1>
+                <?php if (isset($_SESSION['user'])): ?>
+                <h4>Welcome, <?= $_SESSION['user']['name'] ?></h4>
+                <?php endif; ?>
+            </div>
+        </div>
+
