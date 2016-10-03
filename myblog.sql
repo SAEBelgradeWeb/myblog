@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 20, 2016 at 09:24 AM
+-- Generation Time: Oct 03, 2016 at 12:57 PM
 -- Server version: 5.7.13-log
 -- PHP Version: 7.0.8
 
@@ -38,7 +38,8 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `title`) VALUES
 (1, 'Sport'),
 (2, 'Politika'),
-(3, 'Moda');
+(3, 'Moda'),
+(5, 'Muzika');
 
 -- --------------------------------------------------------
 
@@ -52,21 +53,35 @@ CREATE TABLE `posts` (
   `content` text NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(5) NOT NULL,
-  `category_id` int(5) NOT NULL
+  `category_id` int(5) NOT NULL,
+  `type_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `content`, `date`, `user_id`, `category_id`) VALUES
-(3, 'Novi post', '2qewqdasads asd as', '2016-09-19 00:00:00', 2, 1),
-(4, 'KAjsd kjk kajds jka', 'sdf;kasd jaskdj aks', '2016-09-19 00:00:00', 3, 1),
-(7, 'Vlada proba', 'Neki sadrzaj', '2016-09-19 14:54:30', 3, 3),
-(9, 'Poslendji post', 'asdasd a', '2016-09-20 10:32:33', 3, 3),
-(10, 'asdasd', 'dasdas', '2016-09-20 10:34:33', 2, 1),
-(13, 'Posldneja proba', '', '2016-09-20 10:37:11', 3, 2),
-(14, 'asdasd', 'dasdasd', '2016-09-20 10:46:53', 2, 1);
+INSERT INTO `posts` (`id`, `title`, `content`, `date`, `user_id`, `category_id`, `type_id`) VALUES
+(10, 'Novi post promenjen', '2qewqdasads asd as', '2016-09-20 10:34:33', 3, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `types`
+--
+
+CREATE TABLE `types` (
+  `id` int(5) NOT NULL,
+  `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `types`
+--
+
+INSERT INTO `types` (`id`, `title`) VALUES
+(1, 'Kratki'),
+(2, 'Dugacki');
 
 -- --------------------------------------------------------
 
@@ -86,8 +101,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
-(2, 'John Smith', 'Jedan', '123'),
-(3, 'Jane Doe', 'ksjdkasdjk', '123');
+(3, 'Jane Doe', 'ksjdkasdjk', '123'),
+(4, 'Vladimir Lelicanin', 'v.lelicanin@sae.edu', '0192023a7bbd73250516f069df18b500');
 
 --
 -- Indexes for dumped tables
@@ -105,7 +120,14 @@ ALTER TABLE `categories`
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `category_id` (`category_id`);
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `type_id` (`type_id`);
+
+--
+-- Indexes for table `types`
+--
+ALTER TABLE `types`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -121,17 +143,22 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `types`
+--
+ALTER TABLE `types`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
@@ -141,7 +168,8 @@ ALTER TABLE `users`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `posts_ibfk_3` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
